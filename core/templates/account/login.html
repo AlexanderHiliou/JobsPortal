@@ -1,0 +1,48 @@
+{% extends 'account/account_base.html' %}
+{% load static %}
+
+{% block title %}TheJobs - Login{% endblock %}
+
+{% block content %}
+
+<div class="login-block">
+  <img src="{% static 'img/logo.png' %}" alt="">
+  <h1>Log into your account</h1>
+
+  <form class="login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-email"></i></span>
+        <input type="email" class="form-control" name="login" placeholder="Email" autocomplete="email" required="" id="id_login">
+      </div>
+    </div>
+
+    <hr class="hr-xs">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-unlock"></i></span>
+        <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="current-password" required="" id="id_password">
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" type="submit">Login</button>
+
+    <div class="login-footer">
+      <h6>Or login with</h6>
+      <ul class="social-icons">
+        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+  </form>
+</div>
+
+<div class="login-links">
+  <a class="pull-left" href="{% url 'account_reset_password' %}">Forget Password?</a>
+  <a class="pull-right" href="{% url 'account_signup' %}">Register an account</a>
+</div>
+{% endblock %}

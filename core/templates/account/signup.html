@@ -1,0 +1,75 @@
+{% extends 'account/account_base.html' %}
+{% load static %}
+{% block title %}TheJobs - Register{% endblock %}
+
+{% block content %}
+<div class="login-block">
+  <img src="{% static 'img/logo.png' %}" alt="">
+  <h1>{{ idi }}</h1>
+
+  <form class="login" method="POST" action="{% url 'account_signup' %}">{% csrf_token %}
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-user"></i></span>
+        <input type="text" class="form-control" name="username" placeholder="Your name" autocomplete="username" minlength="1" maxlength="150" required="" id="id_username">
+      </div>
+    </div>
+
+    <hr class="hr-xs">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-email"></i></span>
+        <input type="email" class="form-control" name="email" placeholder="Your email address" autocomplete="email" required="" id="id_email">
+      </div>
+    </div>
+
+    <hr class="hr-xs">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-unlock"></i></span>
+        <input type="password" class="form-control" name="password1" placeholder="Choose a password" autocomplete="new-password" required="" id="id_password1">
+      </div>
+    </div>
+
+    <hr class="hr-xs">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="ti-unlock"></i></span>
+        <input type="password" class="form-control" name="password2" placeholder="Repeat your password" autocomplete="new-password" required="" id="id_password2">
+      </div>
+    </div>
+
+    <hr class="hr-xs">
+
+    <div class="form-group">
+      <select class="form-control" name="account_type">
+        <option value="jobseeker" selected>Jobseeker</option>
+        <option value="employer">Employer</option>
+      </select>
+    </div>
+
+
+    <button class="btn btn-primary btn-block" type="submit">Sign up</button>
+
+    <div class="login-footer">
+      <h6>Or register with</h6>
+      <ul class="social-icons">
+        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+  </form>
+</div>
+
+<div class="login-links">
+  <p class="text-center">Already have an account? <a class="txt-brand" href="{% url 'account_login' %}">Login</a></p>
+</div>
+{% endblock %}
+
+
