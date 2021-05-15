@@ -1,10 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {{ form.as_p }}
-</body>
-</html>
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}TheJobs - Add job{% endblock %}
+{% block content %}
+<!-- Page header -->
+<form class="login" method="POST" action="{% url 'job_add' %}">{% csrf_token %}{{ form.media }}
+<header class="page-header">
+    <div class="container page-name">
+        <h1 class="text-center">Add a new job</h1>
+        <p class="lead text-center">Create a new vacancy for your company and put it online.</p>
+    </div>
+
+    <div class="container">
+
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                    <input type="text" name="title" class="form-control input-lg" maxlength="75"
+                           placeholder="Job title, e.g. Front-end developer" required="" id="id_title">
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                    <select class="form-control selectpicker" name="category" required="" id="id_category">
+                        <option value="" selected="">Select category</option>
+                        <option value="1">Technology</option>
+                    </select>
+                    <a class="help-block" href="company-add.html">Add new category</a>
+                </div>
+
+                <div class="form-group col-xs-12">
+                <textarea class="form-control" name="short_description" rows="3" maxlength="400"
+                          placeholder="Short description" required="" id="id_short_description"></textarea>
+                </div>
+
+                <div class="form-group col-xs-12">
+                    <input type="url" class="form-control" name="application_url" placeholder="Application URL"
+                           maxlength="200" id="id_application_url">
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                        <input type="text" class="form-control" placeholder="Location, e.g. Melon Park, CA"
+                               name="location"
+                               maxlength="75" required="" id="id_location">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-briefcase"></i></span>
+                        <select class="form-control selectpicker" name="type_of_employment" id="id_type_of_employment">
+                            <option value="Full time" selected="">Full time</option>
+                            <option value="Part time">Part time</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Remote">Remote</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                        <input type="text" class="form-control" placeholder="Salary" name="salary" maxlength="75"
+                               required="" id="id_salary">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                        <input type="text" class="form-control" placeholder="Working hours, e.g. 40"
+                               name="working_hours"
+                               maxlength="75" required="" id="id_working_hours">
+                        <span class="input-group-addon">hours / week</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-flask"></i></span>
+                        <input type="text" class="form-control" placeholder="Experience, e.g. 5" name="experience"
+                               maxlength="75" required="" id="id_experience">
+                        <span class="input-group-addon">Years</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
+                        <select class="form-control selectpicker" name="academic_degree" id="id_academic_degree"
+                                multiple>
+                            <option value="" selected="">---------</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="Postdoc">Postdoc</option>
+                            <option value="Doctor">Doctor</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="button-group">
+                <div class="action-buttons">
+                    <div class="upload-button">
+                        <button class="btn btn-block btn-primary">Choose a cover image</button>
+                        <input id="cover_img_file" type="file">
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</header>
+<!-- END Page header -->
+
+
+<!-- Main container -->
+<main>
+
+
+    <!-- Job detail -->
+    <section>
+        <div class="container">
+
+            <header class="section-header">
+                <span>Description</span>
+                <h2>Job detail</h2>
+                <p>Write about your company, job description, skills required, benefits, etc.</p>
+            </header>
+
+            <textarea cols="40" id="id_job_detail" name="job_detail" rows="10" data-processed="0"
+                      data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Full&quot;, &quot;height&quot;: 291, &quot;width&quot;: 835, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;language&quot;: &quot;en-us&quot;}"
+                      data-external-plugin-resources="[]" data-id="id_job_detail" data-type="ckeditortype"></textarea>
+
+        </div>
+    </section>
+    <!-- END Job detail -->
+
+
+    <!-- Submit -->
+    <section class="bg-alt">
+        <div class="container">
+            <header class="section-header">
+                <span>Are you done?</span>
+                <h2>Submit Job</h2>
+                <p>Please review your information once more and press the below button to put your job online.</p>
+            </header>
+
+            <p class="text-center">
+                <button class="btn btn-success btn-xl btn-round" type="submit">Submit your job</button>
+            </p>
+
+        </div>
+    </section>
+    <!-- END Submit -->
+</main>
+</form>
+<!-- END Main container -->
+{% endblock %}
