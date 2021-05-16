@@ -3,7 +3,7 @@
 {% block title %}TheJobs - Add job{% endblock %}
 {% block content %}
 <!-- Page header -->
-<form class="login" method="POST" action="{% url 'job_add' %}">{% csrf_token %}{{ form.media }}
+<form class="login" method="POST" action="{% url 'job_update' object.company object.slug %}">{% csrf_token %}{{ form.media }}
 <header class="page-header">
     <div class="container page-name">
         <h1 class="text-center">Add a new job</h1>
@@ -14,13 +14,13 @@
 
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
-                    <input type="text" name="title" class="form-control input-lg" maxlength="75"
+                    <input type="text" name="title" value="{{ object.title }}" class="form-control input-lg" maxlength="75"
                            placeholder="Job title, e.g. Front-end developer" required="" id="id_title">
                 </div>
 
                 <div class="form-group col-xs-12 col-sm-6">
                     <select class="form-control selectpicker" name="category" required="" id="id_category">
-                        <option value="" selected="">Select category</option>
+                        <option value="{{ object.category.ordering }}" selected="">{{ object.category }}</option>
                         <option value="1">Technology</option>
                     </select>
                     <a class="help-block" href="company-add.html">Add new category</a>
@@ -28,11 +28,11 @@
 
                 <div class="form-group col-xs-12">
                 <textarea class="form-control" name="short_description" rows="3" maxlength="400"
-                          placeholder="Short description" required="" id="id_short_description"></textarea>
+                          placeholder="Short description" required="" id="id_short_description">{{ object.short_description }}</textarea>
                 </div>
 
                 <div class="form-group col-xs-12">
-                    <input type="url" class="form-control" name="application_url" placeholder="Application URL"
+                    <input type="url" class="form-control" name="application_url" value="{{ object.application_url }}" placeholder="Application URL"
                            maxlength="200" id="id_application_url">
                 </div>
 
@@ -40,7 +40,7 @@
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                         <input type="text" class="form-control" placeholder="Location, e.g. Melon Park, CA"
-                               name="location"
+                               name="location" value="{{ object.location }}"
                                maxlength="75" required="" id="id_location">
                     </div>
                 </div>
@@ -49,7 +49,8 @@
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-briefcase"></i></span>
                         <select class="form-control selectpicker" name="type_of_employment" id="id_type_of_employment">
-                            <option value="Full time" selected="">Full time</option>
+                            <option value="{{ object.type_of_employment }}" selected="">{{ object.type_of_employment }}</option>
+                            <option value="Full time">Full time</option>
                             <option value="Part time">Part time</option>
                             <option value="Internship">Internship</option>
                             <option value="Freelance">Freelance</option>
@@ -62,7 +63,7 @@
                 <div class="form-group col-xs-12 col-sm-6 col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                        <input type="text" class="form-control" placeholder="Salary" name="salary" maxlength="75"
+                        <input type="text" class="form-control" placeholder="Salary" name="salary" value="{{ object.salary }}" maxlength="75"
                                required="" id="id_salary">
                     </div>
                 </div>
@@ -71,7 +72,7 @@
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                         <input type="text" class="form-control" placeholder="Working hours, e.g. 40"
-                               name="working_hours"
+                               name="working_hours" value="{{ object.working_hours }}"
                                maxlength="75" required="" id="id_working_hours">
                         <span class="input-group-addon">hours / week</span>
                     </div>
@@ -80,7 +81,7 @@
                 <div class="form-group col-xs-12 col-sm-6 col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-flask"></i></span>
-                        <input type="text" class="form-control" placeholder="Experience, e.g. 5" name="experience"
+                        <input type="text" class="form-control" placeholder="Experience, e.g. 5" name="experience" value="{{ object.experience }}"
                                maxlength="75" required="" id="id_experience">
                         <span class="input-group-addon">Years</span>
                     </div>
@@ -90,7 +91,8 @@
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
                         <select class="form-control selectpicker" name="academic_degree" id="id_academic_degree">
-                            <option value="Bachelor " selected="">Bachelor</option>
+                            <option value="{{ object.academic_degree }}" selected="">{{ object.academic_degree }}</option>
+                            <option value="Bachelor">Bachelor</option>
                             <option value="Master">Master</option>
                             <option value="Postdoc">Postdoc</option>
                             <option value="Doctor">Doctor</option>
@@ -132,7 +134,7 @@
 
             <textarea cols="40" id="id_job_detail" name="job_detail" rows="10" data-processed="0"
                       data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Full&quot;, &quot;height&quot;: 291, &quot;width&quot;: 1140, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;language&quot;: &quot;en-us&quot;}"
-                      data-external-plugin-resources="[]" data-id="id_job_detail" data-type="ckeditortype"></textarea>
+                      data-external-plugin-resources="[]" data-id="id_job_detail" data-type="ckeditortype">{{ object.job_detail }}</textarea>
 
         </div>
     </section>
@@ -149,7 +151,7 @@
             </header>
 
             <p class="text-center">
-                <button class="btn btn-success btn-xl btn-round" type="submit">Submit your job</button>
+                <button class="btn btn-success btn-xl btn-round" type="submit" value="Update">Submit your job</button>
             </p>
 
         </div>
