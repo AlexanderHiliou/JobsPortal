@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 
 from employer.models import Job
 from django.utils.text import slugify
@@ -41,6 +42,17 @@ class JobUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return user
 
 
-class JobdeleteView(DeleteView):
-    pass
+class JobDeleteView(DeleteView):
+    model = Job
+    success_url = reverse_lazy('index_view')
+    template_name = 'employer/job_delete_confirmation.html'
 
+
+class JobManage(LoginRequiredMixin, ListView):
+    model = Job
+    template_name = 'employer/job_manage.html'
+    context_object_name = 'jobs'
+
+    def get_queryset(self):
+        queryset = Job.objects.filter(company=self.request.user.userprofile.company).select_related('company')
+        return queryset

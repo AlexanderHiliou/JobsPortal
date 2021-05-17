@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.urls import reverse
+from django.contrib.humanize.templatetags import humanize
 
 from core.models import Userprofile
 
@@ -25,7 +26,8 @@ class Company(models.Model):
         )
 
     name = models.CharField(max_length=75, verbose_name='Название компании')
-    employer = models.OneToOneField(Userprofile, related_name='company', null=True, blank=True, on_delete=models.CASCADE, verbose_name='Работодатель')
+    employer = models.OneToOneField(Userprofile, related_name='company', null=True, blank=True,
+                                    on_delete=models.CASCADE, verbose_name='Работодатель')
     field_of_activity = models.CharField(max_length=75, verbose_name='Сфера деятельности')
     short_description = models.TextField(max_length=400, verbose_name='Краткое описание')
     location = models.CharField(max_length=75, verbose_name='Локация')
@@ -93,7 +95,7 @@ class Job(models.Model):
     experience = models.CharField(max_length=75, verbose_name='Опыт работы')
     academic_degree = models.CharField(max_length=75, choices=degree, default='', null=True, blank=True,
                                        verbose_name='Ученая степень')
-    created_at = models.DateField(auto_now_add=True, null=True, verbose_name='Дата создания объявления')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Дата создания объявления')
     slug = models.SlugField(max_length=75, unique=True)
     job_detail = RichTextField(blank=True, null=True, verbose_name='Полное описание')
 
@@ -102,3 +104,6 @@ class Job(models.Model):
 
     def get_absolute_url(self):
         return reverse('job_detail', kwargs={'company': self.company, 'slug': self.slug})
+
+    def get_date(self):
+        return humanize.naturaltime(self.created_at)

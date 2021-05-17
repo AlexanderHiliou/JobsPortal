@@ -1,0 +1,22 @@
+{% extends 'account/account_base.html' %}
+{% load static %}
+
+{% block title %}Confirmation{% endblock %}
+
+{% block content %}
+
+  <body class="login-page">
+
+
+    <main>
+
+      <div class="login-block">
+        <h1>Are you sure you want to delete "{{ object }}"?</h1>
+
+        <form method="post">{% csrf_token %}
+          <button class="btn btn-danger btn-block" type="submit" value="Confirm">Delete</button>
+        </form>
+      </div>
+
+    </main>
+  {% endblock %}
