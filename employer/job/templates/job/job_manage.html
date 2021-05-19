@@ -20,7 +20,7 @@
 
             <div class="col-xs-12 text-right">
               <br>
-              <a class="btn btn-primary btn-sm" href="job-add.html">Add new job</a>
+              <a class="btn btn-primary btn-sm" href="{% url 'job_add' %}">Add new job</a>
             </div>
 
           {% for job in jobs %}

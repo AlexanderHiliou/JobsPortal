@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from allauth.account.views import SignupView
 
-from employer.models import Job
+from employer.job.models import Job
 from .models import Userprofile
 
 
