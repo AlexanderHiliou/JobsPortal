@@ -1,6 +1,6 @@
 from django.urls import path
 
-from employer.views import JobDetailView, JobCreateView, JobUpdateView, JobManage, JobDeleteView
+from employer.job.views import JobDetailView, JobUpdateView, JobDeleteView, JobCreateView, JobManage
 
 urlpatterns = [
     path('<slug:company>/<slug:slug>/', JobDetailView.as_view(), name='job_detail'),

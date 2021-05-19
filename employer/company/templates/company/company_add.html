@@ -1,0 +1,257 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}TheJobs - Add company{% endblock %}
+{% block content %}
+<form class="login" method="POST" action="{% url 'new_company' %}" enctype="multipart/form-data">{% csrf_token %}{{ form.media }}
+
+    <!-- Page header -->
+    <header class="page-header">
+        <div class="container page-name">
+            <h1 class="text-center">Add your company</h1>
+            <p class="lead text-center">Create a profile for your company and put it online.</p>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-4 col-lg-2">
+                            <div class="form-group">
+                                <input type="file" class="dropify"
+                                       data-default-file="{% static 'img/logo-default.png' %}">
+                                <span class="help-block">A square logo</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-8 col-lg-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" placeholder="Comapny name" name="name"
+                                       maxlength="75" required="" id="id_name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control"
+                                       placeholder="Headline (e.g. Internet and computer software)"
+                                       name="field_of_activity" maxlength="75" required="" id="id_field_of_activity">
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" cols="40" rows="10" placeholder="Short description"
+                                          name="short_description" maxlength="400" required=""
+                                          id="id_short_description"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="row">
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <input type="text" class="form-control" placeholder="Location, e.g. Melon Park, CA"
+                                       name="location" maxlength="75" required="" id="id_location">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                                <select class="form-control selectpicker" name="amount_of_workers"
+                                        id="id_amount_of_workers">
+                                    <option value="0 - 9">0 - 9</option>
+                                    <option value="10 - 99" selected="">10 - 99</option>
+                                    <option value="100 - 999">100 - 999</option>
+                                    <option value="1,000 - 9,999">1,000 - 9,999</option>
+                                    <option value="10,000 - 99,999">10,000 - 99,999</option>
+                                    <option value="100,000 - 999,999">100,000 - 999,999</option>
+                                </select>
+                                <span class="input-group-addon">Employer</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="url" class="form-control" placeholder="Website address" name="website"
+                                       maxlength="200" id="id_website">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
+                                <input type="text" class="form-control" placeholder="Founded on, e.g. 2013"
+                                       name="created_at" maxlength="4" required="" id="id_created_at">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" class="form-control" placeholder="Phone number" name="phone"
+                                       maxlength="75" required="" id="id_phone">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="email" class="form-control" placeholder="Email address" name="email"
+                                       maxlength="254" required="" id="id_email">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="button-group">
+                <div class="action-buttons">
+                    <div class="upload-button">
+                        <button class="btn btn-block btn-primary">Choose a cover image</button>
+                        <input type="file" name="logo" accept="image/*" id="id_logo">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+
+        <!-- Social media -->
+        <section>
+            <div class="container">
+
+                <header class="section-header">
+                    <span>Get connected</span>
+                    <h2>Social media</h2>
+                </header>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="facebook_url"
+                                       maxlength="200" id="id_facebook_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="google_plus_url"
+                                       maxlength="200" id="id_google_plus_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dribbble"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="dribbble_url"
+                                       maxlength="200" id="id_dribbble_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-pinterest"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="pinterest_url"
+                                       maxlength="200" id="id_pinterest_url">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="twitter_url"
+                                       maxlength="200" id="id_twitter_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-github"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="github_url"
+                                       maxlength="200" id="id_github_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-instagram"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="instagram_url"
+                                       maxlength="200" id="id_instagram_url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-youtube"></i></span>
+                                <input type="url" class="form-control" placeholder="Profile URL" name="youtube_url"
+                                       maxlength="200" id="id_youtube_url">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- Social media -->
+
+        <!-- Company detail -->
+        <section class=" bg-alt">
+            <div class="container">
+
+                <header class="section-header">
+                    <span>About</span>
+                    <h2>Company detail</h2>
+                    <p>Write about your company, culture, benefits of working there, etc.</p>
+                </header>
+
+                <textarea cols="40" id="id_company_detail" name="company_detail" rows="10" data-processed="0"
+                          data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Full&quot;, &quot;height&quot;: 291, &quot;width&quot;: 1140, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;language&quot;: &quot;en-us&quot;}"
+                          data-external-plugin-resources="[]" data-id="id_company_detail"
+                          data-type="ckeditortype"></textarea>
+
+            </div>
+        </section>
+        <!-- END Company detail -->
+
+
+        <!-- Submit -->
+        <section>
+            <div class="container">
+                <header class="section-header">
+                    <span>Are you done?</span>
+                    <h2>Submit it</h2>
+                    <p>Please review your information once more and press the below button to put your company
+                        online.</p>
+                </header>
+
+                <p class="text-center">
+                    <button class="btn btn-success btn-xl btn-round">Submit your company</button>
+                </p>
+
+            </div>
+        </section>
+        <!-- END Submit -->
+
+
+    </main>
+    <!-- END Main container -->
+
+</form>
+{% endblock %}

@@ -69,7 +69,8 @@ INSTALLED_APPS = [
 
     # local applications
     'core',
-    'employer',
+    'employer.job',
+    'employer.company',
 ]
 
 MIDDLEWARE = [
