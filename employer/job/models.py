@@ -56,7 +56,7 @@ class Job(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('job_detail', kwargs={'company': self.company, 'slug': self.slug})
+        return reverse('job_detail', kwargs={'company_slug': self.company.slug, 'slug': self.slug})
 
     def get_date(self):
         return humanize.naturaltime(self.created_at)

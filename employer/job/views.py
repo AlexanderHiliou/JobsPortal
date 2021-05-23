@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from django.db import IntegrityError
@@ -13,6 +14,11 @@ class JobDetailView(DetailView):
     slug_field = 'slug'
     template_name = 'job/job_detail.html'
     context_object_name = 'job'
+
+    # def get_object(self):
+    #     return get_object_or_404(Job, company__slug=self.kwargs['company'],
+    #                              slug=self.kwargs['slug'],
+    #         )
 
 
 class JobManage(LoginRequiredMixin, ListView):

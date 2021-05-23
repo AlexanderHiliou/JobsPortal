@@ -1,7 +1,9 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from employer.company.models import Company
 from django.utils.text import slugify
+
+from employer.job.models import Job
 
 
 class CompanyCreateView(CreateView):
@@ -19,3 +21,15 @@ class CompanyCreateView(CreateView):
     # def test_func(self):
     #     user = self.request.user.userprofile.is_employer and self.request.user.userprofile.company
     #     return user
+
+
+class CompanyDetailView(DetailView):
+    model = Company
+    template_name = 'company/company_detail.html'
+    slug_field = 'slug'
+    context_object_name = 'company'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company_jobs'] = Job.objects.filter(company=self.object)[:5]
+        return context

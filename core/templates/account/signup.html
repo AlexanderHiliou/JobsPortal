@@ -68,6 +68,7 @@
 </div>
 
 <div class="login-links">
+  <input type="hidden" name="{{ redirect_field_name }}" value="/company/new_company/" />
   <p class="text-center">Already have an account? <a class="txt-brand" href="{% url 'account_login' %}">Login</a></p>
 </div>
 {% endblock %}
