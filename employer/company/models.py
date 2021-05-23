@@ -30,7 +30,7 @@ class Company(models.Model):
     field_of_activity = models.CharField(max_length=75, verbose_name='Сфера деятельности')
     short_description = models.TextField(max_length=400, verbose_name='Краткое описание')
     location = models.CharField(max_length=75, verbose_name='Локация')
-    logo = models.ImageField(upload_to=load_photo, null=True, blank=True, verbose_name='Лого')
+    logo = models.ImageField(upload_to=load_photo, default='Default/logo-default.png', null=True, blank=True, verbose_name='Лого')
     created_at = models.CharField(max_length=4, verbose_name='Год создания')
     amount_of_workers = models.CharField(max_length=20, choices=amount, default='10 - 99',
                                          verbose_name='Количество работников')

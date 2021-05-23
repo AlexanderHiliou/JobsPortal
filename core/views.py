@@ -9,7 +9,8 @@ from .models import Userprofile
 
 class IndexView(ListView):
     model = Job
-    queryset = Job.objects.all().select_related('company').only('title', 'location', 'company', 'type_of_employment')
+    queryset = Job.objects.order_by('-created_at').select_related('company').only('title', 'location', 'company',
+                                                                                  'type_of_employment')[:5]
     template_name = 'core/index.html'
     context_object_name = 'jobs'
 
