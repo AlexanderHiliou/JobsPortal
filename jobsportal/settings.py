@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +47,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_SIGNUP_REDIRECT_URL = '/company/new-company/'
 SITE_ID = 1
 
 # Application definition

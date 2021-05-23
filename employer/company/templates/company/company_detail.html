@@ -1,0 +1,149 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}TheJobs - Detail{% endblock %}
+{% block content %}
+    <!-- Page header -->
+    <header class="page-header bg-img size-lg" style="background-image: url({% static 'img/bg-banner2.jpg' %})">
+      <div class="container">
+        <div class="header-detail">
+          <img class="logo" src="{{ company.logo.url }}" alt="">
+          <div class="hgroup">
+            <h1>{{ company.name }}</h1>
+            <h3>{{ company.field_of_activity }}</h3>
+          </div>
+          <hr>
+          <p class="lead">{{ company.short_description }}</p>
+
+          <ul class="details cols-3">
+            <li>
+              <i class="fa fa-map-marker"></i>
+              <span>{{ company.location }}</span>
+            </li>
+
+            <li>
+              <i class="fa fa-globe"></i>
+              <a href="#">{{ company.website }}</a>
+            </li>
+
+            <li>
+              <i class="fa fa-users"></i>
+              <span>{{ company.amount_of_workers }} employee</span>
+            </li>
+
+            <li>
+              <i class="fa fa-birthday-cake"></i>
+              <span>{{ company.created_at }}</span>
+            </li>
+
+            <li>
+              <i class="fa fa-phone"></i>
+              <span>{{ company.phone }}</span>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope"></i>
+              <a href="#">{{ company.email }}</a>
+            </li>
+          </ul>
+
+          <div class="button-group">
+            <ul class="social-icons">
+              {% if company.facebook_url %}
+              <li><a class="facebook" href="{{ company.facebook_url }}"><i class="fa fa-facebook"></i></a></li>
+              {% endif %}
+              {% if company.twitter_url %}
+              <li><a class="twitter" href="{{ company.twitter_url }}"><i class="fa fa-twitter"></i></a></li>
+              {% endif %}
+              {% if company.dribbble_url %}
+              <li><a class="dribbble" href="{{ company.dribbble_url }}"><i class="fa fa-dribbble"></i></a></li>
+              {% endif %}
+              {% if company.instagram_url %}
+              <li><a class="instagram" href="{{ company.instagram_url }}"><i class="fa fa-instagram"></i></a></li>
+              {% endif %}
+            </ul>
+
+            <div class="action-buttons">
+              <a class="btn btn-gray" href="#">Favorite</a>
+              <a class="btn btn-success" href="#">Contact</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+
+
+      <!-- Company detail -->
+      <section>
+        <div class="container">
+
+          <header class="section-header">
+            <span>About</span>
+            <h2>Company detail</h2>
+          </header>
+          
+      <p>{{ company.company_detail | safe }}</p>
+
+        </div>
+      </section>
+      <!-- END Company detail -->
+
+
+      <!-- Open positions -->
+      <section id="open-positions" class="bg-alt">
+        <div class="container">
+          <header class="section-header">
+            <span>vacancies</span>
+            <h2>Latest open positions</h2>
+          </header>
+          
+          <div class="row">
+          {% for job in company_jobs %}
+            <!-- Job item -->
+            <div class="col-xs-12">
+              <a class="item-block" href="{{ job.get_absolute_url }}">
+                <header>
+                  <img src="{{ job.company.logo.url }}" alt="">
+                  <div class="hgroup">
+                    <h4>{{ job.title }}</h4>
+                    <h5>Google <span class="label label-success">{{ job.type_of_employment }}</span></h5>
+                  </div>
+                  <time datetime="2016-03-10 20:00">{{ job.get_date }}</time>
+                </header>
+
+                <div class="item-body">
+                  <p>{{ job.short_description }}</p>
+                </div>
+
+                <footer>
+                  <ul class="details cols-3">
+                    <li>
+                      <i class="fa fa-map-marker"></i>
+                      <span>{{ job.location }}</span>
+                    </li>
+
+                    <li>
+                      <i class="fa fa-money"></i>
+                      <span>{{ job.salary }}</span>
+                    </li>
+
+                    <li>
+                      <i class="fa fa-certificate"></i>
+                      <span>{{ job.academic_degree }}</span>
+                    </li>
+                  </ul>
+                </footer>
+              </a>
+            </div>
+            {% endfor %}
+            <!-- END Job item -->
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock %}
