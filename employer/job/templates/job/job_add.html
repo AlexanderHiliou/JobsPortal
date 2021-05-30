@@ -21,7 +21,9 @@
                 <div class="form-group col-xs-12 col-sm-6">
                     <select class="form-control selectpicker" name="category" required="" id="id_category">
                         <option value="" selected="">Select category</option>
-                        <option value="1">Technology</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.title }}</option>
+                        {% endfor %}
                     </select>
                     <a class="help-block" href="company-add.html">Add new category</a>
                 </div>
@@ -90,7 +92,7 @@
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
                         <select class="form-control selectpicker" name="academic_degree" id="id_academic_degree">
-                            <option value="Bachelor " selected="">Bachelor</option>
+                            <option value="Bachelor" selected="">Bachelor</option>
                             <option value="Master">Master</option>
                             <option value="Postdoc">Postdoc</option>
                             <option value="Doctor">Doctor</option>

@@ -12,6 +12,7 @@ USER_MODEL = get_user_model()
 
 
 class IndexViewTestCase(TestCase):
+    """Test of the main page"""
     def setUp(self):
         self.client = Client()
         self.url = reverse('index_view')
@@ -127,8 +128,19 @@ class IndexViewTestCase(TestCase):
             academic_degree='Doctor',
         )
 
-    def test_index_view_url(self):
+    def test_get_index(self):
+        """Tests that a GET request works and renders the correct template"""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'core/index.html')
+
+    def test_jobs_count(self):
+        """Tests that only 5 jobs displayed on the index page"""
+        response = self.client.get(self.url)
         self.assertEqual(len(response.context_data['object_list']), 5)
-        self.assertEqual([job.id for job in response.context_data['object_list']], [6, 5, 4, 3, 2])
+
+    def test_latest_jobs_displayed(self):
+        """Tests the ordering of displayed jobs"""
+        response = self.client.get(self.url)
+        self.assertEqual([job.id for job in response.context_data['object_list']],
+                         [self.job_6.id, self.job_5.id, self.job_4.id, self.job_3.id, self.job_2.id])

@@ -6,7 +6,7 @@ from django.db import IntegrityError
 
 from django.utils.text import slugify
 
-from employer.job.models import Job
+from employer.job.models import Job, Category
 
 
 class JobDetailView(DetailView):
@@ -15,13 +15,8 @@ class JobDetailView(DetailView):
     template_name = 'job/job_detail.html'
     context_object_name = 'job'
 
-    # def get_object(self):
-    #     return get_object_or_404(Job, company__slug=self.kwargs['company'],
-    #                              slug=self.kwargs['slug'],
-    #         )
 
-
-class JobManage(LoginRequiredMixin, ListView):
+class JobManage(ListView):
     model = Job
     template_name = 'job/job_manage.html'
     context_object_name = 'jobs'
@@ -36,6 +31,11 @@ class JobCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Job
     fields = ['title', 'short_description', 'category', 'application_url', 'location', 'type_of_employment', 'salary',
               'working_hours', 'experience', 'academic_degree', 'job_detail']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
     def form_valid(self, form):
         form.instance.company = self.request.user.userprofile.company
@@ -65,7 +65,12 @@ class JobUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return user
 
 
-class JobDeleteView(DeleteView):
+class JobDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Job
     success_url = reverse_lazy('index_view')
     template_name = 'job/job_delete_confirmation.html'
+
+    def test_func(self):
+        obj = self.get_object()
+        user = self.request.user == obj.company.employer.user
+        return user
