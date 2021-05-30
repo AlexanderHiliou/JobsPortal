@@ -1,12 +1,15 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, DetailView
 
 from employer.company.models import Company
 from django.utils.text import slugify
+from django.db import IntegrityError
 
 from employer.job.models import Job
+from django.core.exceptions import ObjectDoesNotExist
 
 
-class CompanyCreateView(CreateView):
+class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'company/company_add.html'
     model = Company
     fields = ['name', 'field_of_activity', 'short_description', 'logo', 'location', 'created_at', 'amount_of_workers',
@@ -15,12 +18,27 @@ class CompanyCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.employer = self.request.user.userprofile
-        form.instance.slug = slugify(form.instance.name)
-        return super().form_valid(form)
+        try:
+            form.instance.slug = slugify(form.instance.name)
+            return super().form_valid(form)
+        except IntegrityError:
+            latest_id = form.instance.__class__.objects.last().pk
+            form.instance.slug = slugify(f'{form.instance.name}-{latest_id}')
+            return super().form_valid(form)
 
-    # def test_func(self):
-    #     user = self.request.user.userprofile.is_employer and self.request.user.userprofile.company
-    #     return user
+    def test_func(self):
+        """ Access is allowed only for Employers without any company """
+        user_is_employer = self.request.user.userprofile.is_employer
+        self.without_company = None
+        if user_is_employer:
+            try:
+                self.request.user.userprofile.company
+            except ObjectDoesNotExist:
+                self.without_company = True
+            else:
+                self.without_company = False
+        user = user_is_employer and self.without_company
+        return user
 
 
 class CompanyDetailView(DetailView):
@@ -31,5 +49,5 @@ class CompanyDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['company_jobs'] = Job.objects.filter(company=self.object)[:5]
+        context['company_jobs'] = Job.objects.filter(company=self.object).order_by('-created_at')[:5]
         return context

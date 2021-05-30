@@ -46,7 +46,7 @@ class Job(models.Model):
     salary = models.CharField(max_length=75, verbose_name='Зарплата')
     working_hours = models.CharField(max_length=75, verbose_name='Часы работы')
     experience = models.CharField(max_length=75, verbose_name='Опыт работы')
-    academic_degree = models.CharField(max_length=75, choices=degree, default='', null=True, blank=True,
+    academic_degree = models.CharField(max_length=75, choices=degree, default='Bachelor', null=True, blank=True,
                                        verbose_name='Ученая степень')
     created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Дата создания объявления')
     slug = models.SlugField(max_length=75, unique=True)

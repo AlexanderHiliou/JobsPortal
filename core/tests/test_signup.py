@@ -8,6 +8,8 @@ USER_MODEL = get_user_model()
 
 
 class SignupTestCase(TestCase):
+    """Test of the signup page"""
+
     @classmethod
     def setUpTestData(cls):
         cls.client = Client()
@@ -16,12 +18,21 @@ class SignupTestCase(TestCase):
         cls.email = 'elsa@gmail.com'
         cls.password = '8096546qWe'
         cls.password2 = '8096546qWe'
+        cls.data = {
+            'username': cls.username,
+            'email': cls.email,
+            'password1': cls.password,
+            'password2': cls.password2,
+        }
 
-    def test_signup_url(self):
+    def test_get_signup(self):
+        """Tests that a GET request works and renders the correct template"""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/signup.html')
 
     def test_form_fields(self):
+        """Tests that only specified fields are displayed in the signup form"""
         response = self.client.get(self.url)
         form = response.context_data['form']
         self.assertEqual(len(form.fields), 4)
@@ -31,27 +42,15 @@ class SignupTestCase(TestCase):
         self.assertIn('password2', form.fields)
 
     def test_signup_form_employer(self):
-        response = self.client.post(self.url, data={
-            'username': self.username,
-            'email': self.email,
-            'password1': self.password,
-            'password2': self.password2,
-            'account_type': 'employer',
-        })
+        """Tests that after a POST request employer will be redirected to the new_company page"""
+        self.data['account_type'] = 'employer'
+        response = self.client.post(self.url, data=self.data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('new_company'))
-        self.assertEqual(USER_MODEL.objects.all().count(), 1)
-        self.assertEqual(Userprofile.objects.filter(is_employer=True).count(), 1)
 
     def test_signup_form_jobseeker(self):
-        response = self.client.post(self.url, data={
-            'username': self.username,
-            'email': self.email,
-            'password1': self.password,
-            'password2': self.password2,
-            'account_type': 'jobseeker',
-        })
+        """Tests that after a POST request jobseeker will be redirected to the frontpage"""
+        self.data['account_type'] = 'jobseeker'
+        response = self.client.post(self.url, data=self.data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')
-        self.assertEqual(USER_MODEL.objects.all().count(), 1)
-        self.assertEqual(Userprofile.objects.filter(is_employer=False).count(), 1)
