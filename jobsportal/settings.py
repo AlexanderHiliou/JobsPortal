@@ -68,11 +68,14 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'debug_toolbar',
+    'taggit',
+    'django_filters',
 
     # local applications
     'core',
     'employer.job',
     'employer.company',
+    'jobseeker.resume',
 ]
 
 MIDDLEWARE = [

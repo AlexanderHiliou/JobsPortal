@@ -28,5 +28,6 @@ urlpatterns = [
     path('', include('core.urls')),
     path('company/', include('employer.company.urls')),
     path('job/', include('employer.job.urls')),
+    path('resume/', include('jobseeker.resume.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

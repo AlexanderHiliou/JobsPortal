@@ -3,6 +3,12 @@ $(function() {
 
   "use strict";
 
+  $('input[name="name"]').change(function(){
+    var value = $(this).val()
+
+    $('input[name="submit"]').val(value)
+  })
+
   // Disable demonstrative links!
   $('a[href="#"]').on('click', function(e){
     e.preventDefault();
@@ -234,23 +240,25 @@ $(function() {
     });
   });
 
-  // Create button
-  $('.btn-duplicator').on('click', function(e) {
-    e.preventDefault();
-    var duplicateable = $(this).parent().siblings('.duplicateable-content');
-    var html = $('<div>').append(duplicateable.clone()).html();
-    $(html).insertBefore(duplicateable);
-    var new_el = duplicateable.prev('.duplicateable-content');
-    new_el.fadeIn(600).removeClass('duplicateable-content');
-
-    // Remove button
-    new_el.find(".btn-remove").on('click', function(e) {
-      e.preventDefault();
-      var el = $(this).parents('.item-block').parent('div');
-      el.fadeOut(600, function() {
-        el.remove();
-      });
-    });
+   Create button
+//  $('.btn-duplicator').on('click', function(e) {
+//    e.preventDefault();
+//    var duplicateable = $(this).parent().siblings('.duplicateable-content');
+//    var html = $('<div>').append(duplicateable.clone()).html();
+//    $(html).insertBefore(duplicateable);
+//    var new_el = duplicateable.prev('.duplicateable-content');
+//    new_el.fadeIn(600).removeClass('duplicateable-content');
+//    var button = document.getElementById('remove_button');
+//    button.remove();
+//
+//    // Remove button
+//    new_el.find(".btn-remove").on('click', function(e) {
+//      e.preventDefault();
+//      var el = $(this).parents('.item-block').parent('div');
+//      el.fadeOut(600, function() {
+//        el.remove();
+//      });
+//    });
 
   });
 
